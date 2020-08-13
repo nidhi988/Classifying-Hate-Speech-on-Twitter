@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
 
 import pandas as pd
 import numpy as np
@@ -10,10 +8,6 @@ import numpy as np
 # load training data
 train = pd.read_csv('BERT_proj/train_E6oV3lV.csv', encoding='iso-8859-1')
 train.shape
-
-
-# In[ ]:
-
 
 import re
 
@@ -32,10 +26,6 @@ def clean_text(text):
 
 train['clean_text'] = train.tweet.apply(clean_text)
 
-
-# In[ ]:
-
-
 from sklearn.model_selection import train_test_split
 
 # split into training and validation sets
@@ -44,7 +34,6 @@ X_tr, X_val, y_tr, y_val = train_test_split(train.clean_text, train.label, test_
 print('X_tr shape:',X_tr.shape)
 
 
-# In[ ]:
 
 
 from bert_serving.client import BertClient
@@ -56,7 +45,7 @@ X_tr_bert = bc.encode(X_tr.tolist())
 X_val_bert = bc.encode(X_val.tolist())
 
 
-# In[ ]:
+
 
 
 from sklearn.linear_model import LogisticRegression
@@ -69,7 +58,7 @@ model_bert = model_bert.fit(X_tr_bert, y_tr)
 pred_bert = model_bert.predict(X_val_bert)
 
 
-# In[ ]:
+
 
 
 from sklearn.metrics import accuracy_score
@@ -77,7 +66,7 @@ from sklearn.metrics import accuracy_score
 print(accuracy_score(y_val, pred_bert))
 
 
-# In[ ]:
+
 
 
 
